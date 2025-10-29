@@ -162,8 +162,8 @@ kubectl get pods -w
 
 ## 👥 Takım
 
-[Buraya takım üyelerinin isimleri]
+BartoooMuch & alihaktan35
 
 ---
-**Proje Tarihi**: 2024
+**Proje Tarihi**: 2025
 **Ders**: SE 4458 - Software Architecture & Design of Modern Large Scale Systems

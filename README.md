@@ -1,169 +1,149 @@
-# Kubernetes ve Docker Demo Projesi
+# Kubernetes and Docker Demo Project
 
-## 📋 Proje Hakkında
+## 📋 About This Project
 
-Bu proje, **Kubernetes** ve **Docker** kullanarak modern container orchestration konseptlerini göstermek için hazırlanmış bir demo uygulamasıdır.
+This project is a demo application that shows how **Kubernetes** works with **Docker** containers. The main goal is to demonstrate Kubernetes **load balancing** functionality.
 
-## 🎯 Öğrenilen Kavramlar
+## 🎯 What This Demo Shows
 
-- **Container Orchestration**: Kubernetes ile container'ları otomatik yönetim
-- **Load Balancing**: Trafiği birden fazla pod'a dağıtma
-- **Scaling**: Pod sayısını dinamik olarak artırma/azaltma
-- **Service Discovery**: Kubernetes service'leri ile network yönetimi
-- **High Availability**: Birden fazla replica ile kesintisiz hizmet
+- **Load Balancing**: How Kubernetes distributes traffic between multiple pods
+- **Container Management**: How Kubernetes manages Docker containers automatically
+- **Scaling**: How to increase or decrease the number of pods
+- **High Availability**: How multiple pods keep the service running
 
-## 📦 Gereksinimler
+## 📦 Requirements
 
-### Windows için:
-1. **Docker Desktop** (ücretsiz indirme: https://www.docker.com/products/docker-desktop)
-2. **PowerShell** (Windows 10/11 ile birlikte gelir)
-3. **kubectl** (Docker Desktop ile birlikte gelir)
+1. **Docker Desktop** (free download: https://www.docker.com/products/docker-desktop)
+2. **kubectl** (comes with Docker Desktop)
 
-### Kubernetes'i Aktifleştirme:
-1. Docker Desktop'ı açın
-2. Settings (⚙️) butonuna tıklayın
-3. Sol menüden **Kubernetes** seçin
-4. **"Enable Kubernetes"** kutusunu işaretleyin
-5. **"Apply & Restart"** butonuna tıklayın
-6. Kubernetes'in başlaması 1-2 dakika sürebilir
+### How to Enable Kubernetes:
+1. Open Docker Desktop
+2. Click on Settings (⚙️)
+3. Select **Kubernetes** from the left menu
+4. Check the **"Enable Kubernetes"** box
+5. Click **"Apply & Restart"**
+6. Wait 1-2 minutes for Kubernetes to start
 
-### Kubernetes Durumunu Kontrol Etme:
-```powershell
+### Check Kubernetes Status:
+```bash
 kubectl cluster-info
 kubectl get nodes
 ```
 
-## 🚀 Kurulum ve Kullanım
+## 🚀 How to Use
 
-### Demo'yu Başlatma:
+### Starting the Demo:
 
-1. **PowerShell**'i yönetici olarak açın (sağ tık > "Run as Administrator")
-2. Proje klasörüne gidin:
-```powershell
-cd "C:\Users\bartu\Sunum ödevi"
+1. Open your terminal
+2. Go to the project folder:
+```bash
+cd /path/to/DockerKubernetesDemo
 ```
 
-3. Setup scriptini çalıştırın:
-```powershell
-.\kubernetes-demo-setup.ps1
+3. Create the deployment:
+```bash
+kubectl apply -f deployment.yaml
 ```
 
-4. Script size bir URL verecek (örnek: `http://localhost:31942`)
-5. Bu URL'yi tarayıcıda açın (GİZLİ SEKME)
-6. Farklı gizli sekmeler açarak **yük dengelemenin** çalıştığını göreceksiniz
-
-### Demo'yu Test Etme:
-
-Her gizli sekmede farklı bir **hostname** göreceksiniz. Bu, isteklerinizin farklı pod'lara dağıtıldığını gösterir.
-
-**Terminal'de test:**
-```powershell
-curl http://localhost:PORT_NUMBER | Select-String hostname
+4. Create the service:
+```bash
+kubectl apply -f service.yaml
 ```
 
-### Pod Sayısını Artırma:
-
-```powershell
-kubectl scale deployment demo-app --replicas=5
-```
-
-Şimdi 5 pod'unuz olacak ve yük daha fazla dağıtılacak!
-
-### Demo'yu Durdurma ve Temizleme:
-
-```powershell
-.\kubernetes-demo-cleanup.ps1
-```
-
-## 📊 Örnek Komutlar
-
-### Pod'ları Görüntüleme:
-```powershell
-kubectl get pods
-kubectl get pods -o wide  # Daha detaylı bilgi
-```
-
-### Log'ları İnceleme:
-```powershell
-kubectl logs -l app=demo-app --tail=50
-```
-
-### Pod Detaylarını Görme:
-```powershell
-kubectl describe pod POD_NAME
-```
-
-### Service'i Görüntüleme:
-```powershell
+5. Get the service URL:
+```bash
 kubectl get service demo-app
 ```
 
-### Real-time İzleme:
-```powershell
+6. Open the URL in your browser (use private/incognito tabs)
+7. Open multiple private tabs to see **load balancing** in action
+
+### Testing the Demo:
+
+Each private tab will show a different **hostname**. This proves that your requests are being sent to different pods.
+
+**Test in terminal:**
+```bash
+curl http://localhost:PORT_NUMBER
+```
+
+### Increase the Number of Pods:
+
+```bash
+kubectl scale deployment demo-app --replicas=5
+```
+
+Now you have 5 pods and the traffic is distributed across all of them!
+
+### Stop and Clean Up:
+
+```bash
+kubectl delete deployment demo-app
+kubectl delete service demo-app
+```
+
+## 📊 Useful Commands
+
+### View Pods:
+```bash
+kubectl get pods
+kubectl get pods -o wide  # More detailed information
+```
+
+### View Logs:
+```bash
+kubectl logs -l app=demo-app --tail=50
+```
+
+### View Pod Details:
+```bash
+kubectl describe pod POD_NAME
+```
+
+### View Service:
+```bash
+kubectl get service demo-app
+```
+
+### Watch Pods in Real-time:
+```bash
 kubectl get pods -w
 ```
 
-## 🎓 Ödev İçin Sunum İçeriği
+## 🎓 Why Kubernetes?
 
-### Neden Kubernetes?
-- **Otomatik Yönetim**: Container'lar otomatik başlatılıp durdurulur
-- **Ölçeklenebilirlik**: Kolayca pod sayısı artırılabilir
-- **Yüksek Erişilebilirlik**: Bir pod çökerse diğerleri devam eder
-- **Kaynak Yönetimi**: CPU ve memory otomatik dağıtılır
+- **Automatic Management**: Containers start and stop automatically
+- **Easy Scaling**: You can easily increase the number of pods
+- **High Availability**: If one pod crashes, others continue working
+- **Resource Management**: CPU and memory are distributed automatically
 
-### Hangi Uygulamalar İçin Uygundur?
-✅ Microservice mimarileri
-✅ Yüksek trafik alan web uygulamaları
-✅ Bulut-native uygulamalar
-✅ DevOps süreçleri
-✅ Containerize edilmiş servisler
+### When to Use Kubernetes?
+✅ Microservice applications
+✅ Web applications with high traffic
+✅ Cloud-native applications
+✅ Applications that need to scale
+✅ Containerized services
 
-### Kubernetes Servisleri:
-- **Deployments**: Uygulama deployment'ları
-- **Services**: Network yönetimi
-- **Pods**: Çalışan container'lar
-- **ReplicaSets**: Pod replica yönetimi
-- **Namespaces**: Kaynak izolasyonu
+### Kubernetes Components:
+- **Deployments**: Application deployments
+- **Services**: Network management
+- **Pods**: Running containers
+- **ReplicaSets**: Manages pod replicas
 
-### Docker + Kubernetes İlişkisi:
-- **Docker**: Container'ları oluşturur ve çalıştırır
-- **Kubernetes**: Container'ları orchestrate eder, yönetir ve scale eder
+### Docker + Kubernetes:
+- **Docker**: Creates and runs containers
+- **Kubernetes**: Manages and scales containers
 
-## 🐛 Sorun Giderme
+## 📝 Notes
 
-### "kubectl: command not found" hatası:
-- Docker Desktop'ın çalıştığından emin olun
-- PowerShell'i yeniden başlatın
+- This demo uses Docker Desktop Kubernetes (single node cluster)
+- In production environments, multi-node clusters are used
+- Load balancing happens automatically when you have multiple pods
 
-### "Unable to connect to server" hatası:
-- Docker Desktop'ta Kubernetes'in aktif olduğunu kontrol edin
-- Settings > Kubernetes > "Enable Kubernetes" kontrol edin
-
-### Port zaten kullanılıyor:
-- Farklı bir port kullanılacaktır (otomatik)
-- Veya: `kubectl get service demo-app` ile portu kontrol edin
-
-### Pod'lar başlamıyor:
-- Docker Desktop'ın yeterli kaynak aldığından emin olun
-- Settings > Resources'tan RAM ve CPU'yu artırın
-
-## 📝 Notlar
-
-- Script'ler hem bash (.sh) hem de PowerShell (.ps1) formatında mevcuttur
-- Windows'ta PowerShell scriptleri daha iyi çalışır
-- Docker Desktop Kubernetes kullandığı için tek node cluster oluşur
-- Production'da genellikle multi-node cluster'lar kullanılır
-
-## 📚 Ek Kaynaklar
-
-- [Kubernetes Resmi Dokümantasyon](https://kubernetes.io/docs/)
-- [Docker Docs](https://docs.docker.com/)
-- [Kubernetes Learning Path](https://kubernetes.io/docs/tutorials/)
-
-## 👥 Takım
+## 👥 Team
 
 BartoooMuch & alihaktan35
 
 ---
-**Proje Tarihi**: 19 Kasım 2025
-**Ders**: SE 4458 - Software Architecture & Design of Modern Large Scale Systems
+**Project Date**: November 19, 2025
+**Course**: SE 4458 - Software Architecture & Design of Modern Large Scale Systems

@@ -14,55 +14,33 @@ Bu proje, **Kubernetes** ve **Docker** kullanarak modern container orchestration
 
 ## 📦 Gereksinimler
 
-### Tüm İşletim Sistemleri İçin:
+### Windows için:
 1. **Docker Desktop** (ücretsiz indirme: https://www.docker.com/products/docker-desktop)
-2. **kubectl** (Docker Desktop ile birlikte gelir)
-3. **Terminal/PowerShell** erişimi
+2. **PowerShell** (Windows 10/11 ile birlikte gelir)
+3. **kubectl** (Docker Desktop ile birlikte gelir)
 
-### Kubernetes'i Etkinleştirme:
+### Kubernetes'i Aktifleştirme:
 1. Docker Desktop'ı açın
-2. Settings (⚙️) → **Kubernetes** sekmesine gidin
-3. **"Enable Kubernetes"** kutusunu işaretleyin
-4. **"Apply & Restart"** butonuna tıklayın
-5. Kubernetes'in başlaması 1-2 dakika sürebilir
-6. Sol altta yeşil işaret görünene kadar bekleyin
+2. Settings (⚙️) butonuna tıklayın
+3. Sol menüden **Kubernetes** seçin
+4. **"Enable Kubernetes"** kutusunu işaretleyin
+5. **"Apply & Restart"** butonuna tıklayın
+6. Kubernetes'in başlaması 1-2 dakika sürebilir
 
 ### Kubernetes Durumunu Kontrol Etme:
-```bash
+```powershell
 kubectl cluster-info
 kubectl get nodes
 ```
 
 ## 🚀 Kurulum ve Kullanım
 
-### macOS / Linux için:
-
-1. **Terminal'i açın**
-2. Proje klasörüne gidin:
-```bash
-cd ~/path/to/DockerKubernetesDemo
-```
-
-3. Script'lere çalıştırma yetkisi verin (ilk kez):
-```bash
-chmod +x kubernetes-demo-setup.sh kubernetes-demo-cleanup.sh
-```
-
-4. Setup scriptini çalıştırın:
-```bash
-./kubernetes-demo-setup.sh
-```
-
-5. Script size bir URL verecek (örnek: `http://localhost:30633`)
-6. Bu URL'yi tarayıcıda açın
-7. Farklı tarayıcı sekmeleri açarak **load balancing**'i test edin
-
-### Windows için:
+### Demo'yu Başlatma:
 
 1. **PowerShell**'i yönetici olarak açın (sağ tık > "Run as Administrator")
 2. Proje klasörüne gidin:
 ```powershell
-cd "C:\path\to\DockerKubernetesDemo"
+cd "C:\Users\bartu\Sunum ödevi"
 ```
 
 3. Setup scriptini çalıştırın:
@@ -71,155 +49,121 @@ cd "C:\path\to\DockerKubernetesDemo"
 ```
 
 4. Script size bir URL verecek (örnek: `http://localhost:31942`)
-5. Bu URL'yi tarayıcıda açın
-6. Farklı tarayıcı sekmeleri açarak **load balancing**'i test edin
+5. Bu URL'yi tarayıcıda açın (GİZLİ SEKME)
+6. Farklı gizli sekmeler açarak **yük dengelemenin** çalıştığını göreceksiniz
 
-## 🧪 Demo'yu Test Etme
+### Demo'yu Test Etme:
 
-### Load Balancing Testi:
-Her tarayıcı sekmesinde farklı bir **hostname** göreceksiniz. Bu, isteklerinizin farklı pod'lara dağıtıldığını gösterir.
+Her gizli sekmede farklı bir **hostname** göreceksiniz. Bu, isteklerinizin farklı pod'lara dağıtıldığını gösterir.
 
-**Terminal'de test (macOS/Linux):**
-```bash
-curl http://localhost:PORT_NUMBER
-```
-
-**PowerShell'de test (Windows):**
+**Terminal'de test:**
 ```powershell
 curl http://localhost:PORT_NUMBER | Select-String hostname
 ```
 
-### Scaling Testi:
-```bash
-# Pod sayısını 5'e çıkar
+### Pod Sayısını Artırma:
+
+```powershell
 kubectl scale deployment demo-app --replicas=5
-
-# Pod'ları görüntüle
-kubectl get pods
-
-# Real-time izleme
-kubectl get pods -w
 ```
 
-### Demo'yu Temizleme:
+Şimdi 5 pod'unuz olacak ve yük daha fazla dağıtılacak!
 
-**macOS/Linux:**
-```bash
-./kubernetes-demo-cleanup.sh
-```
+### Demo'yu Durdurma ve Temizleme:
 
-**Windows:**
 ```powershell
 .\kubernetes-demo-cleanup.ps1
 ```
 
-## 📊 Kullanışlı Komutlar
+## 📊 Örnek Komutlar
 
-### Pod Yönetimi:
-```bash
-# Pod'ları listele
+### Pod'ları Görüntüleme:
+```powershell
 kubectl get pods
-
-# Detaylı bilgi
-kubectl get pods -o wide
-
-# Pod detaylarını gör
-kubectl describe pod <POD_NAME>
+kubectl get pods -o wide  # Daha detaylı bilgi
 ```
 
-### Log İnceleme:
-```bash
-# Tüm pod'ların loglarını gör
+### Log'ları İnceleme:
+```powershell
 kubectl logs -l app=demo-app --tail=50
-
-# Specific pod'un loglarını izle
-kubectl logs -f <POD_NAME>
 ```
 
-### Service Yönetimi:
-```bash
-# Service bilgilerini gör
+### Pod Detaylarını Görme:
+```powershell
+kubectl describe pod POD_NAME
+```
+
+### Service'i Görüntüleme:
+```powershell
 kubectl get service demo-app
-
-# Tüm kaynakları listele
-kubectl get all
 ```
 
-## 🎓 Kubernetes Neden Kullanılır?
+### Real-time İzleme:
+```powershell
+kubectl get pods -w
+```
 
-### Temel Faydaları:
-- ✅ **Otomatik Yönetim**: Container'lar otomatik başlatılıp durdurulur
-- ✅ **Ölçeklenebilirlik**: Kolayca pod sayısı artırılabilir
-- ✅ **Yüksek Erişilebilirlik**: Bir pod çökerse diğerleri devam eder
-- ✅ **Self-Healing**: Başarısız container'lar otomatik yeniden başlatılır
-- ✅ **Kaynak Yönetimi**: CPU ve memory otomatik dağıtılır
-- ✅ **Load Balancing**: Trafik otomatik olarak dağıtılır
+## 🎓 Ödev İçin Sunum İçeriği
 
-### İdeal Kullanım Alanları:
-- Microservice mimarileri
-- Yüksek trafik alan web uygulamaları
-- Cloud-native uygulamalar
-- DevOps ve CI/CD pipeline'ları
-- Containerize edilmiş servisler
+### Neden Kubernetes?
+- **Otomatik Yönetim**: Container'lar otomatik başlatılıp durdurulur
+- **Ölçeklenebilirlik**: Kolayca pod sayısı artırılabilir
+- **Yüksek Erişilebilirlik**: Bir pod çökerse diğerleri devam eder
+- **Kaynak Yönetimi**: CPU ve memory otomatik dağıtılır
 
-### Kubernetes Bileşenleri:
-- **Pods**: Çalışan container'ların en küçük birimi
-- **Deployments**: Uygulama deployment'larını yönetir
-- **Services**: Pod'lara network erişimi sağlar
-- **ReplicaSets**: Pod replica'larını yönetir
-- **Namespaces**: Kaynak izolasyonu için mantıksal bölümler
+### Hangi Uygulamalar İçin Uygundur?
+✅ Microservice mimarileri
+✅ Yüksek trafik alan web uygulamaları
+✅ Bulut-native uygulamalar
+✅ DevOps süreçleri
+✅ Containerize edilmiş servisler
 
-## 🐋 Docker + Kubernetes
+### Kubernetes Servisleri:
+- **Deployments**: Uygulama deployment'ları
+- **Services**: Network yönetimi
+- **Pods**: Çalışan container'lar
+- **ReplicaSets**: Pod replica yönetimi
+- **Namespaces**: Kaynak izolasyonu
 
-**Docker** ve **Kubernetes** birlikte çalışır:
+### Docker + Kubernetes İlişkisi:
 - **Docker**: Container'ları oluşturur ve çalıştırır
-- **Kubernetes**: Container'ları orkestre eder, yönetir ve scale eder
+- **Kubernetes**: Container'ları orchestrate eder, yönetir ve scale eder
 
 ## 🐛 Sorun Giderme
 
 ### "kubectl: command not found" hatası:
 - Docker Desktop'ın çalıştığından emin olun
-- Terminal/PowerShell'i yeniden başlatın
-- `kubectl version` komutuyla kontrol edin
+- PowerShell'i yeniden başlatın
 
 ### "Unable to connect to server" hatası:
-- Docker Desktop'ta Kubernetes'in etkin olduğunu kontrol edin
-- Settings → Kubernetes → "Enable Kubernetes" işaretli olmalı
-- Docker Desktop'ı restart edin
+- Docker Desktop'ta Kubernetes'in aktif olduğunu kontrol edin
+- Settings > Kubernetes > "Enable Kubernetes" kontrol edin
 
-### Port çakışması:
-- Kubernetes otomatik olarak farklı bir port seçecektir
-- Mevcut portu görmek için: `kubectl get service demo-app`
+### Port zaten kullanılıyor:
+- Farklı bir port kullanılacaktır (otomatik)
+- Veya: `kubectl get service demo-app` ile portu kontrol edin
 
 ### Pod'lar başlamıyor:
-- Docker Desktop'a yeterli kaynak ayrıldığından emin olun
-- Settings → Resources → RAM ve CPU'yu artırın (minimum 4GB RAM önerilir)
-
-### Script çalıştırma izni hatası (macOS/Linux):
-```bash
-chmod +x kubernetes-demo-setup.sh kubernetes-demo-cleanup.sh
-```
+- Docker Desktop'ın yeterli kaynak aldığından emin olun
+- Settings > Resources'tan RAM ve CPU'yu artırın
 
 ## 📝 Notlar
 
-- Script'ler hem macOS/Linux (.sh) hem de Windows (.ps1) formatında mevcuttur
-- Docker Desktop Kubernetes, tek node'lu bir cluster oluşturur (development için yeterli)
-- Production ortamlarında genellikle multi-node cluster'lar kullanılır
-- Demo uygulaması Node.js ile yazılmış basit bir web sunucusudur
+- Script'ler hem bash (.sh) hem de PowerShell (.ps1) formatında mevcuttur
+- Windows'ta PowerShell scriptleri daha iyi çalışır
+- Docker Desktop Kubernetes kullandığı için tek node cluster oluşur
+- Production'da genellikle multi-node cluster'lar kullanılır
 
 ## 📚 Ek Kaynaklar
 
-- [Kubernetes Resmi Dokümantasyonu](https://kubernetes.io/docs/)
-- [Docker Resmi Dokümantasyonu](https://docs.docker.com/)
-- [Kubernetes Tutorial](https://kubernetes.io/docs/tutorials/)
-- [Docker Desktop Kubernetes](https://docs.docker.com/desktop/kubernetes/)
+- [Kubernetes Resmi Dokümantasyon](https://kubernetes.io/docs/)
+- [Docker Docs](https://docs.docker.com/)
+- [Kubernetes Learning Path](https://kubernetes.io/docs/tutorials/)
 
 ## 👥 Takım
 
-**Geliştiriciler**: BartoooMuch & alihaktan35
+[Buraya takım üyelerinin isimleri]
 
 ---
-
-**Proje Tarihi**: 2025  
-**Ders**: SE 4458 - Software Architecture & Design of Modern Large Scale Systems  
-**Konu**: Docker Container & Kubernetes Orchestration
+**Proje Tarihi**: 2024
+**Ders**: SE 4458 - Software Architecture & Design of Modern Large Scale Systems

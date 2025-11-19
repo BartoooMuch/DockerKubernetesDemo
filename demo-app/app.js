@@ -1,5 +1,6 @@
 const express = require('express');
 const os = require('os');
+const path = require('path');
 const app = express();
 const port = 8080;
 
@@ -8,9 +9,12 @@ const hostname = os.hostname();
 const podName = hostname;
 const startTime = new Date().toISOString();
 
+// Static dosyaları serve et
+app.use(express.static(__dirname));
+
 // Ana sayfa
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // API endpoint - pod bilgisi ver

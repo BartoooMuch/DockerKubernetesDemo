@@ -146,4 +146,5 @@ BartoooMuch & alihaktan35
 
 ---
 **Project Date**: November 19, 2025
+
 **Course**: SE 4458 - Software Architecture & Design of Modern Large Scale Systems
